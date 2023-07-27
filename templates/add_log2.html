@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>div{margin: 10px;}</style>
+  </head>
+  <body>
+    <div>
+        <h2><align = 'left'>Hello, {{       g.user.name}}</align> <align = 'right'><a href="/logout"><button type="submit">Logout</button> </a></align></h2>
+        
+    </div>
+    <h1>Log {{tracker[0].Name}}</h1>
+    <form class="" action="/add_log/{{tracker[0].Tracker_ID}}" method="post" id="create-form">
+      <div class="">
+        <label for="date">When:</label>
+        <input type="date" name="date" value="" required>
+      </div>
+
+      <label for="value">Value:</label>
+
+      <select name="value" id="value">
+        {% for v in values_list %}
+        <option value="{{v}}">{{v}}</option>
+        {% endfor %}
+        
+      </select>
+
+      <div class="">
+        <label for="">Notes:</label>
+        <input type="text" name="notes" value="">
+      </div>
+
+      <div class="">
+        <input type="submit" name="" value="Log it">
+      </div>
+    </form>
+  </body>
+</html>
+

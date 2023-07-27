@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>div{margin: 10px;}</style>
+  </head>
+  <body>
+    <div>
+        <h2><align = 'left'>Hello, {{       g.user.name}}</align> <align = 'right'><a href="/logout"><button type="submit">Logout</button> </a></align></h2>
+        
+    </div>
+    <h1>Update Tracker</h1>
+    <form class="" action="/tracker/{{this_tracker['Tracker_ID']}}/update" method="post" id="create-form">
+      <div class="">
+        <label for="">Name:</label>
+        <input type="text" name="name" value="{{this_tracker['Name']}}" required>
+      </div>
+      <div class="">
+        <label for="">Description:</label>
+        <input type="text" name="desc" value="{{this_tracker['Desc']}}" required>
+      </div>
+      
+
+      <label for="tracker_type">Tracker Type:</label>
+
+      <select name="tracker_type" id="tracker_type">
+        <option value="numerical" {{'selected' if 1 in l  }}>Numerical</option>
+        <option value="multiple choices" {{'selected' if 2 in l }}>Multiple Choices</option>
+        
+      </select>
+
+      <div class="">
+        <label for="">Setting:</label>
+        <input type="text" name="setting" value="{{this_tracker['Settings']}}">
+      </div>
+
+      <div class="">
+        <input type="submit" name="" value="Submit">
+      </div>
+    </form>
+  </body>
+</html>

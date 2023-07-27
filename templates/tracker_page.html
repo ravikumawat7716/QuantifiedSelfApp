@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    table,tr,td,th{border:1px solid;border-collapse: collapse;padding: 3px;}
+    tr:nth-child(even){background: #e3e3e3;}
+    th{background: #0f5f73;color: white;}
+    div{margin: 10px;}
+    </style>
+  </head>
+  <body>
+    <div>
+        <h2><align = 'left'>Hello, {{       g.user.name}}</align> <align = 'right'><a href="/logout"><button type="submit">Logout</button> </a></align></h2>
+        
+    </div>
+    <div>
+        <h1>{{tracker['Name']}} - Tracker</h1>
+    </div>
+    <div>
+        <img src = "/static/img.png" width="400">
+    </div>
+    <h1>Logs</h1>
+    <hr>
+    <table id = "all-logs">
+        <tr>
+          <th>SNo.</th>
+          <th>Timestamp</th>
+          <th>Value</th>
+          <th></th>
+        </tr>
+  
+        {% set count=namespace(value=1) %}
+        {% for row in logss %}
+        <tr>
+          <td>{{count.value}}</td>
+          <td>{{row['Timestamp']}}</td>
+          <td>
+            {{row['value']}}
+          </td>
+        </tr>
+        {% set count.value=count.value+1 %}
+        {% endfor %}
+  
+      </table>
+      
+    </body>
+  </html>
+  
