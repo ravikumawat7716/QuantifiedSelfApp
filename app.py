@@ -4,18 +4,14 @@ from enum import unique
 from flask import Flask, render_template, request, url_for, redirect, session, g
 from flask_sqlalchemy import SQLAlchemy
 from matplotlib import pyplot as plt
+from flask import flash, get_flashed_messages
 
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-instances_folder = os.path.join(basedir, 'instances')
-if not os.path.exists(instances_folder):
-    os.makedirs(instances_folder)
 
 #create a Flask Instance
 app=Flask(__name__)
 app.secret_key = 'any random string '
-# Add Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(instances_folder, 'database.sqlite3')
+# Add Database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #Initialize the database
@@ -66,7 +62,7 @@ class Log(db.Model):
 
 
 
-@app.before_request
+
 @app.before_request
 def before_request():
     users = User.query.all()
@@ -111,29 +107,28 @@ def register():
 
 
 
-@app.route("/login",methods=['GET','POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    if request.method=='POST':
-
+    if request.method == 'POST':
         session.pop('user_id', None)
-
         un = request.form['username']
         pw = request.form['password']
-
         userdata = User.query.all()
+
         for i in userdata:
             if i.email_address == un:
                 if i.password == pw:
                     session['user_id'] = un 
+                    flash('Login successful!', 'success')
                     return redirect(url_for('profile'))
                 else:
-                    return render_template('wrong_password.html')
-            
-                
+                    flash('Incorrect password. Please try again.', 'error')
+                    break
+        else:
+            flash('User not found. Please register.', 'error')
+    
+    return render_template('login.html', messages=get_flashed_messages())
 
-
-        return render_template('user_not_found.html')
-    return render_template('login.html')
 
 @app.route('/logout')
 def logout():
@@ -258,7 +253,7 @@ def add_log(Tracker_ID):
 
 
 if __name__ == "__main__":
-    database_path = os.path.join(instances_folder, 'database.sqlite3')
+    database_path = os.path.join('database.sqlite3')
     if not os.path.isfile(database_path):
         with app.app_context():
             db.create_all()
