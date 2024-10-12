@@ -1,5 +1,7 @@
 # QuantifiedSelfApp
 Track Your Self.
+<br>
+Live Url : https://quantified-selfapp.azurewebsites.net/
 
 ## How to setup & run -
 1. fork this repository
